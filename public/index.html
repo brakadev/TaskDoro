@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>TaskDoro - Enfócate y Organízate</title>
+
+	<!-- Estilos -->
+	<link rel="stylesheet" href="src/styles/styles.css">
+
+	<!-- FONTS -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+		rel="stylesheet">
+</head>
+
+<body>
+	<main class="taskdoro">
+
+		<!-- POMODORO STRUCTURE -->
+		<section class="pomodoro_container">
+
+			<!-- SECTION 1: introduccion -->
+			<header class="pomodoro-header">
+				<h1>Prepárate para concentrarte</h1>
+				<p>Desactivaremos las notificaciones y alertas de aplicaciones durante cada sesión. Para sesiones más
+					largas, agregaremos un breve descanso para que puedas recargar energías.</p>
+			</header>
+
+			<!-- SECTION 2: temporizador -->
+			<section class="pomodoro-timer">
+				<button class="spin-button" id="decrementButton" aria-label="Reducir tiempo">▼</button>
+				<input type=" number" class="number-input" id="inputNumber" value="10" min="10" max="240"
+					aria-label="Duración de la sesión">
+				<button class="spin-button" id="incrementButton" aria-label="Aumentar tiempo">▲</button>
+
+			</section>
+
+			<span class="span_timebreaks" id="timebreak"></span>
+			<!-- SECTION 3: Breaks -->
+			<section class="pomodoro-breaks">
+				<input type="checkbox" class="checkbox-skipbreaks">
+				<p>Omitir descansos</p>
+			</section>
+
+			<!-- SECTION 4: Start -->
+			<section class="pomodoro-start">
+				<button class="button-startPomodoro" id="startPomodoro">► Iniciar sesión de enfoque</button>
+			</section>
+		</section>
+
+		<!-- TASK STRUCTURE: Tasks -->
+		<section class="task_container">
+			<header>
+				<h2>Mantente enfocado</h2>
+				<p>Agrega tareas y asígnalas a sesiones de enfoque durante tu día.</p>
+				<button>+ Agregar tarea</button>
+			</header>
+		</section>
+	</main>
+
+	<script type="module" src="src/Js/app.js" defer></script>
+</body>
+
+</html>
