@@ -1,36 +1,53 @@
-import { initializeTimer, startTimer, toggleControls } from './timer.js';
-import { initializeTasks, addTask } from './tasks.js';
+const taskForm = document.getElementById('taskForm');
+const taskInput = document.getElementById('taskInput');
+const taskList = document.getElementById('taskList');
+const taskCounter = document.getElementById('spanTaskNumber');
 
-// Elementos globales
-const startPomodoroButton = document.getElementById('startPomodoro');
-const addTaskButton = document.getElementById('addTaskButton');
+taskForm.addEventListener('submit', handleFormSubmit);
+taskList.addEventListener('click', handleTaskClick);
+document.addEventListener('DOMContentLoaded', updateCounter);
 
-// Inicializar funcionalidades principales
-function initializeApp() {
-    initializeTimer();
-    initializeTasks();
-    attachGlobalEvents();
+function handleFormSubmit(e) {
+    e.preventDefault();
+    const taskText = taskInput.value.trim();
+
+    if (taskText === '') {
+        alert('Por favor, ingresa una tarea válida.');
+    } else {
+        createTask(taskText);
+        taskInput.value = '';
+    }
+    updateCounter();
 }
 
-// Eventos globales
-function attachGlobalEvents() {
-    startPomodoroButton.addEventListener('click', handleStartPomodoro);
-    addTaskButton.addEventListener('click', addTask);
+function createTask(taskText) {
+    const taskItem = document.createElement('li');
+    taskItem.textContent = taskText;
+    taskItem.classList.add('task-item');
+    taskList.append(taskItem);
 }
 
-// Manejar el inicio del temporizador
-function handleStartPomodoro() {
-    const inputNumber = document.getElementById('inputNumber');
-    const minutes = parseInt(inputNumber.value, 10);
+function handleTaskClick() {
 
-    if (isNaN(minutes) || minutes <= 0) {
-        alert('Por favor, ingresa un tiempo válido para iniciar el temporizador.');
-        return;
+    if (e.target.tagName === 'LI') {
+        e.target.remove();
+        updateCounter();
     }
 
-    toggleControls(true); // Bloquea los controles
-    startTimer(minutes, () => toggleControls(false)); // Desbloquea al finalizar
 }
 
-// Inicializa la aplicación al cargar la página
-document.addEventListener('DOMContentLoaded', initializeApp);
+function updateCounter() {
+    const totalTasks = taskList.children.length;
+    taskCounter.textContent = totalTasks === 0
+        ? 'No hay tareas pendientes'
+        : `Tienes ${totalTasks} tarea(s) pendiente(s).`;
+}
+
+function displayError(message) {
+    taskCounter.textContent = message;
+    setTimeout(updateCounter, 3000); // Vuelve a mostrar el contador después de 3 segundos
+}
+
+
+
+

@@ -1,23 +1,33 @@
-import { formatTime } from './utils.js';
+import { formatTime } from '..Js/utils.js';
 
-
+// Inicializar temporizador
 export function initializeTimer() {
     const incrementButton = document.getElementById('incrementButton');
     const decrementButton = document.getElementById('decrementButton');
     const inputNumber = document.getElementById('inputNumber');
-    const skipBreaksCheckbox = document.querySelector('.checkbox-skipbreaks');
+    const skipBreaksCheckbox = document.getElementById('skipBreaksCheckbox');
 
-    // Eventos para incrementar y decrementar tiempo
     incrementButton.addEventListener('click', () => updateInputValue(inputNumber, 5));
     decrementButton.addEventListener('click', () => updateInputValue(inputNumber, -5));
     inputNumber.addEventListener('change', () => validateInput(inputNumber));
     skipBreaksCheckbox.addEventListener('change', updateBreaksIndicator);
 
-    // Inicializar el indicador de descansos
     updateBreaksIndicator();
 }
 
-export function startTimer(minutes) {
+export function handleStartPomodoro() {
+    const inputNumber = document.getElementById('inputNumber');
+    const minutes = parseInt(inputNumber.value, 10);
+
+    if (isNaN(minutes) || minutes <= 0) {
+        alert('Por favor, ingresa un tiempo válido para iniciar el temporizador.');
+        return;
+    }
+
+    startTimer(minutes);
+}
+
+function startTimer(minutes) {
     let remainingTime = minutes * 60;
     const timebreakSpan = document.getElementById('timebreak');
 
@@ -33,39 +43,38 @@ export function startTimer(minutes) {
     }, 1000);
 }
 
-function getNumberOfBreaks(minutes) {
-    if (minutes < 30) return 0;
+function updateInputValue(input, valueChange) {
+    let currentValue = parseInt(input.value, 10) || 0;
+    currentValue += valueChange;
+    if (currentValue >= 10 && currentValue <= 240) {
+        input.value = currentValue;
+    }
+}
 
-    const breakRanges = [
-        { min: 30, max: 74, breaks: 1 },
-        { min: 75, max: 99, breaks: 2 },
-        { min: 100, max: 124, breaks: 3 },
-        { min: 125, max: 149, breaks: 4 },
-        { min: 150, max: 174, breaks: 5 },
-        { min: 175, max: 199, breaks: 6 },
-        { min: 200, max: 224, breaks: 7 },
-        { min: 225, max: 240, breaks: 8 },
-    ];
-
-    return breakRanges.find((range) => minutes >= range.min && minutes <= range.max)?.breaks || 0;
+function validateInput(input) {
+    const value = parseInt(input.value, 10);
+    if (isNaN(value) || value < 10 || value > 240) {
+        input.value = 10;
+    }
+    updateBreaksIndicator();
 }
 
 function updateBreaksIndicator() {
     const inputNumber = document.getElementById('inputNumber');
-    const skipBreaksCheckbox = document.querySelector('.checkbox-skipbreaks');
+    const skipBreaksCheckbox = document.getElementById('skipBreaksCheckbox');
     const timebreakSpan = document.getElementById('timebreak');
 
     const minutes = parseInt(inputNumber.value, 10);
-    const numBreaks = getNumberOfBreaks(minutes);
+    const breaks = getNumberOfBreaks(minutes);
 
-    let indicatorMessage = '';
-    if (skipBreaksCheckbox.checked) {
-        indicatorMessage = 'Hemos omitido los descansos.';
-    } else if (numBreaks === 0) {
-        indicatorMessage = 'No tienes breaks disponibles.';
-    } else {
-        indicatorMessage = `Tienes ${numBreaks} ${numBreaks === 1 ? 'break' : 'breaks'} de 10 minutos.`;
-    }
+    let message = skipBreaksCheckbox.checked
+        ? 'Hemos omitido los descansos.'
+        : breaks > 0
+            ? `Tienes ${breaks} ${breaks === 1 ? 'break' : 'breaks'} de 10 minutos.`
+            : 'No tienes breaks disponibles.';
+    timebreakSpan.textContent = message;
+}
 
-    timebreakSpan.textContent = indicatorMessage;
+function getNumberOfBreaks(minutes) {
+    return Math.max(0, Math.floor((minutes - 30) / 45));
 }

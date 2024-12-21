@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
 	<meta charset="UTF-8">
@@ -7,7 +7,7 @@
 	<title>TaskDoro - Enfócate y Organízate</title>
 
 	<!-- Estilos -->
-	<link rel="stylesheet" href="src/styles/styles.css">
+	<link rel="stylesheet" href="/styles/styles.css">
 
 	<!-- FONTS -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,10 +23,10 @@
 		<!-- POMODORO STRUCTURE -->
 		<section class="pomodoro_container">
 
-			<!-- SECTION 1: introduccion -->
+			<!-- SECTION 1: introducción -->
 			<header class="pomodoro-header">
 				<h1>Prepárate para concentrarte</h1>
-				<p>Desactivaremos las notificaciones y alertas de aplicaciones durante cada sesión. Para sesiones más
+				<p class="pomodoro-paragraph">Para sesiones más
 					largas, agregaremos un breve descanso para que puedas recargar energías.</p>
 			</header>
 
@@ -36,14 +36,14 @@
 				<input type=" number" class="number-input" id="inputNumber" value="10" min="10" max="240"
 					aria-label="Duración de la sesión">
 				<button class="spin-button" id="incrementButton" aria-label="Aumentar tiempo">▲</button>
-
 			</section>
 
-			<span class="span_timebreaks" id="timebreak"></span>
+			<span class="span_timebreaks" id="timebreak">No tienes breaks disponibles.</span>
+
 			<!-- SECTION 3: Breaks -->
 			<section class="pomodoro-breaks">
 				<input type="checkbox" class="checkbox-skipbreaks">
-				<p>Omitir descansos</p>
+				<p class="pomodoro-paragraph-descansos">Omitir descansos</p>
 			</section>
 
 			<!-- SECTION 4: Start -->
@@ -54,15 +54,24 @@
 
 		<!-- TASK STRUCTURE: Tasks -->
 		<section class="task_container">
-			<header>
+			<header class="task-header">
 				<h2>Mantente enfocado</h2>
-				<p>Agrega tareas y asígnalas a sesiones de enfoque durante tu día.</p>
-				<button>+ Agregar tarea</button>
+				<p class="task-paragraph">Agrega tareas y asígnalas a sesiones de enfoque durante tu día.</p>
 			</header>
+			<form class="taskFormulario" id="taskForm">
+				<input type="text" class="addTask" id="taskInput" placeholder="Añadir tarea"
+					aria-label="Agrega una tarea">
+				<button type="submit" class="submitTask" id="taskButton" aria-label="Agregar tarea">Agregar</button>
+				<p class="spanTaskNumber" id="spanTaskNumber">No hay tareas pendientes</p>
+			</form>
+
+			<div class="taskList-container" id="taskListContainer">
+				<ul class="taskList" id="taskList"></ul>
+			</div>
 		</section>
 	</main>
 
-	<script type="module" src="src/Js/app.js" defer></script>
+	<script type="module" src="Js/app.js" defer></script>
 </body>
 
 </html>
