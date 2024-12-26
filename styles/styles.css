@@ -296,3 +296,15 @@ input[type="number"] {
 	cursor: pointer;
 	align-items: center;
 }
+
+.completed {
+	text-decoration: line-through;
+	color: gray;
+}
+
+.taskMessage {
+	font-size: 0.7rem;
+	color: rgb(85, 85, 85);
+	font-weight: 600;
+	margin-top: 0.4rem;
+}
