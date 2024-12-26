@@ -6,7 +6,9 @@ style-guide.md
 preview.jpg
 .vscode
 settings.json
-# package.json
+package.json
+pnpm-lock.yaml
+vite.config.js
 
 # Folders
 design
